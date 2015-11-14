@@ -10,6 +10,8 @@
 
 @interface ViewController : UIViewController
 
+//- (IBAction)peeringButton:(id)sender;
+//@property (weak, nonatomic) IBOutlet UIButton *peeringButtonLabel;
 
 @end
 
