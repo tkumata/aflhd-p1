@@ -24,12 +24,16 @@
     NSMutableArray *shokuzai;
     NSArray *foodSeed;
     NSArray *foodSeed2;
+    
+    int screenWidth, screenHeight;
 }
 
 @property (nonatomic, strong) MCBrowserViewController *browserVC;
 @property (nonatomic, strong) MCAdvertiserAssistant *advertiser;
 @property (nonatomic, strong) MCSession *mySession;
 @property (nonatomic, strong) MCPeerID *myPeerID;
+
+@property (nonatomic, strong) UIViewController *secondVC;
 
 @end
 
@@ -42,6 +46,8 @@
     // MARK: Init
 //    [self clearScreenSubviews];
     isConnected = NO;
+    screenWidth = self.view.frame.size.width;
+    screenHeight = self.view.frame.size.height;
     
     foodSeed = @[@"こんにゃく", @"こんぶ", @"だいこん", @"じゃが芋", @"たろ芋", @"さと芋", @"トマト", @"玉ネギ", @"長ネギ", @"エシャロット", @"ピーマン", @"にんじん", @"きゅうり", @"なす", @"しいたけ", @"鶏肉", @"豚肉", @"牛肉", @"セロリ", @"カリフラワー", @"ブロッコリー", @"ベビーコーン", @"わらび", @"チンゲンサイ", @"からし菜", @"あした葉", @"アーティチョーク", @"クウシンサイ", @"かぼちゃ", @"そら豆", @"えんどう豆", @"だだ茶豆", @"しめじ", @"キャベツ", @"ほうれん草", @"アジ", @"サンマ", @"マグロ", @"サバ"];
     
@@ -51,7 +57,7 @@
     // reload button
     reloadButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     reloadButton.tag = 1;
-    reloadButton.frame = CGRectMake(20, 210, 280, 40);
+    reloadButton.frame = CGRectMake(20, 210, screenWidth-40, 40);
     [[reloadButton layer] setBorderWidth:1.0];
     [[reloadButton layer] setCornerRadius:5.0];
     [[reloadButton layer] setBorderColor:[[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor]];
@@ -60,36 +66,36 @@
     // send button
     sendButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     sendButton.tag = 2;
-    sendButton.frame = CGRectMake(20, 280, 280, 40);
+    sendButton.frame = CGRectMake(20, 280, screenWidth-40, 40);
     [[sendButton layer] setBorderWidth:1.0];
     [[sendButton layer] setCornerRadius:5.0];
-    [[sendButton layer] setBorderColor:[[UIColor redColor] CGColor]];
+    [[sendButton layer] setBorderColor:[[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor]];
     [sendButton setTitle:@"食材候補をおいしいウォッチへ送信する" forState:UIControlStateNormal];
     
     // ingredients label
     shokuzaiKouho = [[UILabel alloc] init];
     shokuzaiKouho.tag = 3;
-    shokuzaiKouho.frame = CGRectMake(20, 40, 280, 160);
-    [[shokuzaiKouho layer] setBorderWidth:2.0];
+    shokuzaiKouho.frame = CGRectMake(20, 40, screenWidth-40, 160);
+    [[shokuzaiKouho layer] setBorderWidth:1.0];
     [[shokuzaiKouho layer] setCornerRadius:5.0];
-    [[shokuzaiKouho layer] setBorderColor:[[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor]];
+    [[shokuzaiKouho layer] setBorderColor:[[UIColor grayColor] CGColor]];
     shokuzaiKouho.textAlignment = NSTextAlignmentCenter;
     shokuzaiKouho.numberOfLines = 6;
     
     // vore result label
     voteResult = [[UILabel alloc] init];
     voteResult.tag = 4;
-    voteResult.frame = CGRectMake(20, 40, 280, 160);
-    [[voteResult layer] setBorderWidth:2.0];
+    voteResult.frame = CGRectMake(20, 40, screenWidth-40, 160);
+    [[voteResult layer] setBorderWidth:1.0];
     [[voteResult layer] setCornerRadius:5.0];
-    [[voteResult layer] setBorderColor:[[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor]];
+    [[voteResult layer] setBorderColor:[[UIColor grayColor] CGColor]];
     voteResult.textAlignment = NSTextAlignmentCenter;
     voteResult.numberOfLines = 6;
     
     // reciep button
     reciepButtonLabel = [[UILabel alloc] init];
     reciepButtonLabel.tag = 5;
-    reciepButtonLabel.frame = CGRectMake(20, 220, 280, 40);
+    reciepButtonLabel.frame = CGRectMake(20, 220, screenWidth-40, 40);
     [[reciepButtonLabel layer] setBorderWidth:1.0];
     [[reciepButtonLabel layer] setCornerRadius:5.0];
     [[reciepButtonLabel layer] setBorderColor:[[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor]];
@@ -99,7 +105,7 @@
     // peering button color
     peeringButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     peeringButton.tag = 101;
-    peeringButton.frame = CGRectMake(20, 548, 180, 40);
+    peeringButton.frame = CGRectMake(20, screenHeight-70, screenWidth-40, 40);
     [[peeringButton layer] setBorderWidth:1.0];
     [[peeringButton layer] setCornerRadius:5.0];
     [[peeringButton layer] setBorderColor:[[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor]];
@@ -152,7 +158,7 @@
                 [shokuzai addObject:tmp];
             }
             
-            shokuzaiKouho.text = [NSString stringWithFormat:@"%@\n%@\n%@\n", shokuzai[0], shokuzai[1], shokuzai[2]];
+            shokuzaiKouho.text = [NSString stringWithFormat:@"%@\n%@\n%@", shokuzai[0], shokuzai[1], shokuzai[2]];
             [self.view addSubview:shokuzaiKouho];
         });
     } else {
@@ -184,8 +190,10 @@
             [self.view addSubview:sendButton];
         });
     } else {
-        [[self.view viewWithTag:1] removeFromSuperview];
-        [[self.view viewWithTag:2] removeFromSuperview];
+        dispatch_async(dispatch_get_main_queue(),^{
+            [[self.view viewWithTag:1] removeFromSuperview];
+            [[self.view viewWithTag:2] removeFromSuperview];
+        });
     }
 }
 

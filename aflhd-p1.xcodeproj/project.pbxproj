@@ -48,6 +48,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8984AE531BF71B0C0050C3EA /* images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		89E3A6D31BF218C20004C1B6 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +86,7 @@
 				89E3A6EB1BF218C30004C1B6 /* Assets.xcassets */,
 				89E3A6ED1BF218C30004C1B6 /* LaunchScreen.storyboard */,
 				89E3A6F01BF218C30004C1B6 /* Info.plist */,
+				8984AE531BF71B0C0050C3EA /* images */,
 				89E3A6DF1BF218C30004C1B6 /* Supporting Files */,
 			);
 			path = "aflhd-p1";
