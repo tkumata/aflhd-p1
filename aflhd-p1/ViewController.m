@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "SecondViewController.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 
@@ -19,7 +20,8 @@
     UIButton *reloadButton;
     UIButton *sendButton;
     UILabel *voteResult;
-    UILabel *reciepButtonLabel;
+    UIButton *recipeButton;
+    NSString *selectedIngredient;
     
     NSMutableArray *shokuzai;
     NSArray *foodSeed;
@@ -33,8 +35,6 @@
 @property (nonatomic, strong) MCSession *mySession;
 @property (nonatomic, strong) MCPeerID *myPeerID;
 
-@property (nonatomic, strong) UIViewController *secondVC;
-
 @end
 
 @implementation ViewController
@@ -44,7 +44,6 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     // MARK: Init
-//    [self clearScreenSubviews];
     isConnected = NO;
     screenWidth = self.view.frame.size.width;
     screenHeight = self.view.frame.size.height;
@@ -92,15 +91,16 @@
     voteResult.textAlignment = NSTextAlignmentCenter;
     voteResult.numberOfLines = 6;
     
-    // reciep button
-    reciepButtonLabel = [[UILabel alloc] init];
-    reciepButtonLabel.tag = 5;
-    reciepButtonLabel.frame = CGRectMake(20, 220, screenWidth-40, 40);
-    [[reciepButtonLabel layer] setBorderWidth:1.0];
-    [[reciepButtonLabel layer] setCornerRadius:5.0];
-    [[reciepButtonLabel layer] setBorderColor:[[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor]];
-    reciepButtonLabel.textAlignment = NSTextAlignmentCenter;
-    reciepButtonLabel.numberOfLines = 1;
+    // recipe button
+    recipeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    recipeButton.tag = 5;
+    recipeButton.frame = CGRectMake(20, 220, screenWidth-40, 40);
+    [[recipeButton layer] setBorderWidth:1.0];
+    [[recipeButton layer] setCornerRadius:5.0];
+    [[recipeButton layer] setBorderColor:[[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor]];
+    [recipeButton setTitle:@"この食材を使ったレシピ一覧 (予定)" forState:UIControlStateNormal];
+    // tap peering button
+    [recipeButton addTarget:self action:@selector(toSecondVC:) forControlEvents:UIControlEventTouchUpInside];
     
     // peering button color
     peeringButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -114,17 +114,17 @@
     [peeringButton addTarget:self action:@selector(showBrowserVC) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:peeringButton];
     
-    // MARK: Bluetooth Advertise
-    //  Setup peer ID
+    // MARK: Bluetooth Advertise Screen
+    // Setup peer ID
     self.myPeerID = [[MCPeerID alloc] initWithDisplayName:[UIDevice currentDevice].name];
     
-    //  Setup session
+    // Setup session
     self.mySession = [[MCSession alloc] initWithPeer:self.myPeerID];
     
-    //  Setup BrowserViewController
+    // Setup BrowserViewController
     self.browserVC = [[MCBrowserViewController alloc] initWithServiceType:@"owatch" session:self.mySession];
     
-    //  Setup Advertiser
+    // Setup Advertiser
     self.advertiser = [[MCAdvertiserAssistant alloc] initWithServiceType:@"owatch" discoveryInfo:nil session:self.mySession];
     
     self.browserVC.delegate = self;
@@ -144,7 +144,7 @@
     [self makeScreenShokuzaiKouho];
 }
 
-#pragma mark Reload food ingredients
+#pragma mark - Reload food ingredients
 - (void)reloadFood {
     if (isConnected == YES) {
         dispatch_async(dispatch_get_main_queue(),^{
@@ -166,7 +166,7 @@
     }
 }
 
-#pragma mark Send message to peer device
+#pragma mark - Send message to peer device
 - (void)sendData {
     // Convert to NSData
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:shokuzai];
@@ -176,7 +176,7 @@
     [self.mySession sendData:data toPeers:[self.mySession connectedPeers] withMode:MCSessionSendDataUnreliable error:&error];
 }
 
-#pragma mark Make screen 食材候補
+#pragma mark - Make screen 食材候補
 - (void)makeScreenShokuzaiKouho {
     if (isConnected == YES) {
         [self clearScreenSubviews];
@@ -207,11 +207,7 @@
     });
 }
 
-//- (void)makeScreenVoteResult {
-//    
-//}
-
-#pragma mark Bluetooth peering button
+#pragma mark - Bluetooth peering button
 //- (IBAction)peeringButton:(id)sender {
 //}
 
@@ -245,20 +241,20 @@
     }
 }
 
+// MARK: 食材候補選択結果の受信
 // Received data from remote peer
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
     [self clearScreenSubviews];
     
     // append message to text box on main thread
     dispatch_async(dispatch_get_main_queue(),^{
-        //  Decode data back to NSString
-        NSString *tmp = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        
-        voteResult.text = [NSString stringWithFormat:@"「%@」が選ばれました。", tmp];;
+        // Decode data back to NSString
+        selectedIngredient = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        // 投票結果ラベル
+        voteResult.text = [NSString stringWithFormat:@"「%@」が選ばれました。", selectedIngredient];
         [self.view addSubview:voteResult];
-        
-        reciepButtonLabel.text = @"この食材を使ったレシピ一覧 (予定)";
-        [self.view addSubview:reciepButtonLabel];
+        // レシピ一覧画面遷移ボタン
+        [self.view addSubview:recipeButton];
     });
 }
 
@@ -274,6 +270,11 @@
 - (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error {
 }
 
-#pragma mark Second View?
+#pragma mark - Second View
+- (void)toSecondVC:(UIButton*)button {
+    SecondViewController *secondVC = [[SecondViewController alloc] init];
+    secondVC.arg = selectedIngredient;
+    [self presentViewController:secondVC animated:YES completion:nil];
+}
 
 @end

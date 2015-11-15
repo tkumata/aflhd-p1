@@ -12,6 +12,7 @@
 
 //- (IBAction)peeringButton:(id)sender;
 //@property (weak, nonatomic) IBOutlet UIButton *peeringButtonLabel;
+@property (nonatomic, strong) UIViewController *secondVC;
 
 @end
 

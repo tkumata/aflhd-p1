@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		89BFA2461BF8C8AD00613C51 /* recipeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 89BFA2451BF8C8AD00613C51 /* recipeVC.m */; };
 		89E3A6E11BF218C30004C1B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E3A6E01BF218C30004C1B6 /* main.m */; };
 		89E3A6E41BF218C30004C1B6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E3A6E31BF218C30004C1B6 /* AppDelegate.m */; };
 		89E3A6E71BF218C30004C1B6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E3A6E61BF218C30004C1B6 /* ViewController.m */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		89BFA2441BF8C8AD00613C51 /* recipeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = recipeVC.h; sourceTree = "<group>"; };
+		89BFA2451BF8C8AD00613C51 /* recipeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = recipeVC.m; sourceTree = "<group>"; };
 		89E3A6DC1BF218C20004C1B6 /* aflhd-p1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "aflhd-p1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89E3A6E01BF218C30004C1B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		89E3A6E21BF218C30004C1B6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -82,6 +85,8 @@
 				89E3A6E61BF218C30004C1B6 /* ViewController.m */,
 				89E3A6FA1BF248570004C1B6 /* SecondViewController.h */,
 				89E3A6FB1BF248570004C1B6 /* SecondViewController.m */,
+				89BFA2441BF8C8AD00613C51 /* recipeVC.h */,
+				89BFA2451BF8C8AD00613C51 /* recipeVC.m */,
 				89E3A6E81BF218C30004C1B6 /* Main.storyboard */,
 				89E3A6EB1BF218C30004C1B6 /* Assets.xcassets */,
 				89E3A6ED1BF218C30004C1B6 /* LaunchScreen.storyboard */,
@@ -176,6 +181,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89BFA2461BF8C8AD00613C51 /* recipeVC.m in Sources */,
 				89E3A6FC1BF248570004C1B6 /* SecondViewController.m in Sources */,
 				89E3A6E71BF218C30004C1B6 /* ViewController.m in Sources */,
 				89E3A6E41BF218C30004C1B6 /* AppDelegate.m in Sources */,
