@@ -18,6 +18,8 @@
     UIButton *recipeButton1;
     UIButton *recipeButton2;
     UIButton *recipeButton3;
+    
+    UIButton *backButton;
 }
 
 @end
@@ -46,34 +48,37 @@
     
     // ingredients label
     recipeList = [[UILabel alloc] init];
-    recipeList.tag = 3;
-    recipeList.frame = CGRectMake(0, 40, screenWidth, 40);
-    [[recipeList layer] setBorderWidth:1.0];
-    [[recipeList layer] setCornerRadius:5.0];
-    [[recipeList layer] setBorderColor:[[UIColor grayColor] CGColor]];
+    recipeList.tag = 11;
+    recipeList.frame = CGRectMake(0, 20, screenWidth, 60);
     recipeList.textAlignment = NSTextAlignmentCenter;
     recipeList.numberOfLines = 2;
     recipeList.text = [NSString stringWithFormat:@"%@ のレシピ一覧", _arg];
     [self.view addSubview:recipeList];
     
+    // back button
+    backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    backButton.tag = 12;
+    backButton.frame = CGRectMake(10, 20, 50, 60);
+    [backButton setTitle:[NSString stringWithFormat:@"戻る"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(dismissView) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
+    
     // dummy table view
     recipeButton1 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    recipeButton1.tag = 1;
-    recipeButton1.frame = CGRectMake(0, 90, screenWidth, 60);
+    recipeButton1.tag = 21;
+    recipeButton1.frame = CGRectMake(0, 80, screenWidth, 60);
     [[recipeButton1 layer] setBorderWidth:1.0];
-    [[recipeButton1 layer] setCornerRadius:5.0];
     [[recipeButton1 layer] setBorderColor:[[UIColor grayColor] CGColor]];
-    [recipeButton1 setTitle:[NSString stringWithFormat:@"%@ の料理1", _arg] forState:UIControlStateNormal];
+    [recipeButton1 setTitle:[NSString stringWithFormat:@"%@ の料理 1", _arg] forState:UIControlStateNormal];
     [recipeButton1 addTarget:self action:@selector(toRecipeVC:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:recipeButton1];
     
     recipeButton2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    recipeButton2.tag = 2;
-    recipeButton2.frame = CGRectMake(0, 160, screenWidth, 60);
+    recipeButton2.tag = 22;
+    recipeButton2.frame = CGRectMake(0, 150, screenWidth, 60);
     [[recipeButton2 layer] setBorderWidth:1.0];
-    [[recipeButton2 layer] setCornerRadius:5.0];
     [[recipeButton2 layer] setBorderColor:[[UIColor grayColor] CGColor]];
-    [recipeButton2 setTitle:[NSString stringWithFormat:@"%@ の料理2", _arg] forState:UIControlStateNormal];
+    [recipeButton2 setTitle:[NSString stringWithFormat:@"%@ の料理 2", _arg] forState:UIControlStateNormal];
     [recipeButton2 addTarget:self action:@selector(toRecipeVC:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:recipeButton2];
 }
@@ -89,6 +94,12 @@
     recipeVC *recipeV = [[recipeVC alloc] init];
     recipeV.arg = _arg;
     [self presentViewController:recipeV animated:YES completion:nil];
+}
+
+#pragma mark - Back
+
+- (void)dismissView {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Navigation
