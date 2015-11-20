@@ -12,7 +12,11 @@
 
 //- (IBAction)peeringButton:(id)sender;
 //@property (weak, nonatomic) IBOutlet UIButton *peeringButtonLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segment;
+- (IBAction)segmentControl:(id)sender;
+
 @property (nonatomic, strong) UIViewController *secondVC;
+@property (nonatomic, strong) NSString *dismissKeyword;
 
 @end
 

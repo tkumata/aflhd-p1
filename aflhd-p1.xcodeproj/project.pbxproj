@@ -14,7 +14,6 @@
 		89E3A6EA1BF218C30004C1B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89E3A6E81BF218C30004C1B6 /* Main.storyboard */; };
 		89E3A6EC1BF218C30004C1B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89E3A6EB1BF218C30004C1B6 /* Assets.xcassets */; };
 		89E3A6EF1BF218C30004C1B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89E3A6ED1BF218C30004C1B6 /* LaunchScreen.storyboard */; };
-		89E3A6F71BF218F20004C1B6 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89E3A6F61BF218F20004C1B6 /* CoreBluetooth.framework */; };
 		89E3A6F91BF21BE00004C1B6 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89E3A6F81BF21BE00004C1B6 /* MultipeerConnectivity.framework */; };
 		89E3A6FC1BF248570004C1B6 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E3A6FB1BF248570004C1B6 /* SecondViewController.m */; };
 /* End PBXBuildFile section */
@@ -44,7 +43,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				89E3A6F91BF21BE00004C1B6 /* MultipeerConnectivity.framework in Frameworks */,
-				89E3A6F71BF218F20004C1B6 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

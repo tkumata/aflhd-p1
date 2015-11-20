@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ViewController.h"
 #import "SecondViewController.h"
 #import "recipeVC.h"
 
@@ -100,6 +101,11 @@
 
 - (void)dismissView {
     [self dismissViewControllerAnimated:YES completion:nil];
+//    [self dismissViewControllerAnimated:YES completion:^{
+//        ViewController *viewcontroller = [[ViewController alloc] init];
+//        viewcontroller.dismissKeyword = @"back1";
+//        [self presentViewController:viewcontroller animated:YES completion:nil];
+//    }];
 }
 
 #pragma mark - Navigation
